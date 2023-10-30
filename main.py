@@ -5,6 +5,7 @@ from character import Player
 from ball import Ball
 #---- INICIALIZANDO PYGAME-----
 pygame.init()
+pygame.mixer.init()
 #------------------------------
 
 #----------- Plantillas -------------------------
@@ -19,13 +20,15 @@ BLACK = (0, 0, 0)
 
 
 #---- Nombre ventana ----------------
-pygame.display.set_caption("Juego de Fútbol Simple")
+pygame.display.set_caption("PRO EVOLUTION SOCCER")
 #---------------------------------------------------
 
 #----- configuraciones -----------------
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 reloj = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
+sonido1 = pygame.mixer.Sound("Sounds/2.wav")
+sonido1.set_volume(0.3)
 #-------------------------------------------------------------------------
 
 #----inicializando OBJETOS----
@@ -34,12 +37,17 @@ player2 = Player(SCREEN_WIDTH-120, SCREEN_HEIGHT // 2 + 10)
 ball = Ball(SCREEN_WIDTH,SCREEN_HEIGHT,280,300)
 opciones = menu(SCREEN_WIDTH,SCREEN_HEIGHT,screen)
 #----------------------------------------------------------------
-inicio = False
+
+#-------- variables----------
+inicio = False  # Para luego ver que opcion se eligio
 instrucciones = False
-button_rect1 = pygame.Rect(200, 150, 200, 80)
-button_rect2 = pygame.Rect(200, 250, 200, 80)
+#---------------------------------------------------------
+
+button_rect1 = pygame.Rect(200, 250, 200, 40) #ubicar el tamaño de los cuadros para los clicks
+button_rect2 = pygame.Rect(200, 300, 200, 40)
 
 while True:
+    pygame.mixer.Sound.play(sonido1)
     keys = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -84,15 +92,20 @@ while True:
             if event.key == pygame.K_RIGHT:
                 player2.speed = 0
                 
-    opciones.dibujar_menu()
+    opciones.dibujar_fondo_menu() # BACKGROUND
+
+    ''' MENSAJE TITULO DE PANTALLA
     text = 'FUTBOLITO'
     text_surface = font.render(text, True, WHITE)
     text_rect = text_surface.get_rect()
     text_rect.center = (SCREEN_WIDTH / 2, 50)
     screen.blit(text_surface, text_rect)
-    opciones.dibujar_botones("START", 200, 150, 200, 80, WHITE, (200, 200, 200))
-    opciones.dibujar_botones("Instrucciones", 200, 250, 200, 80, WHITE, (200, 200, 200))   
-    #movimientod
+    '''
+
+
+    opciones.dibujar_botones("START", 200, 250, 200, 40, WHITE, BLUE)
+    opciones.dibujar_botones("Instrucciones", 200, 300, 200, 40, WHITE, BLUE)
+
 
 
     #---------limites--------------
@@ -107,18 +120,19 @@ while True:
 
 
 
+
     if inicio:
         screen.fill(WHITE)
         #GRAFICOS
         #-----fondo-------
-        fondo = pygame.image.load("cancha.jpg").convert_alpha()
+        fondo = pygame.image.load("img/cancha.jpg").convert_alpha()
         fondo = pygame.transform.scale(fondo, (600, 400))
         screen.blit(fondo, (0, 0))
         LineaMitad = pygame.draw.rect(screen, WHITE, (298, 225, 4, 600))
         #-------------------------------------------------------
         
         #----BALON---------
-        img_ball = pygame.image.load("Fondo.png")
+        img_ball = pygame.image.load("img/bola.png")
         img_ball = pygame.transform.scale(img_ball, (30, 30))
         bola = img_ball.get_rect()
         bola.topleft = (ball.x,ball.y)
@@ -127,8 +141,8 @@ while True:
 
 
         #----ARCOS----
-        imgarc_izq = pygame.image.load('arco1.png')  
-        imgarc_der = pygame.image.load('arco2.png')
+        imgarc_izq = pygame.image.load('img/arco1.png')
+        imgarc_der = pygame.image.load('img/arco2.png')
         imgarc_izq = pygame.transform.scale(imgarc_izq, (80, 165))
         imgarc_der = pygame.transform.scale(imgarc_der, (80, 165))
         arco_izq = imgarc_izq.get_rect()
@@ -153,16 +167,21 @@ while True:
         #-------------------------------------------------------
 
         # ------------------------------------------------------------------------------------
-
-        #if jugador2.colliderect(LineaMitad):
-         #   player2.x += 5
         ball.update()
         if jugador1.colliderect(arco_izq):
             player1.x += 5
         if jugador2.colliderect(arco_der):
             player2.x -= 5
         if jugador1.colliderect(bola) or jugador2.colliderect(bola):
-            ball.speed_x = 0
+            ball.speed_x *= -1
+            ball.x += (ball.speed_x)*2
+
+        if ball.speed_x == 0:
+            ball.x = 280
+            ball.y = 300
+            ball.speed_x = 3
+
+
 
         pygame.display.flip()
 
