@@ -15,9 +15,8 @@ class menu:
         self.SCREEN_WIDTH =  SCREEN_WIDTH
         self.screen = screen
         self.fondo = pygame.image.load("img/pes.jpg").convert_alpha()
-
     def dibujar_fondo_menu(self):
-        self.fondo = pygame.transform.scale(self.fondo, (600, 400))
+        self.fondo = pygame.transform.scale(self.fondo, (1280, 720))
         self.screen.blit(self.fondo, (0, 0)) 
 
     def dibujar_botones(self, text, x, y, width, height, inactive_color, active_color):
