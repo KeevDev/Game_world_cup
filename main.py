@@ -1,8 +1,8 @@
 import pygame
 import sys
-from menu import menu
-from character import Player
-from ball import Ball
+from game_scripts.menu import menu
+from game_scripts.character import Player
+from game_scripts.ball import Ball
 #---- INICIALIZANDO PYGAME-----
 
 pygame.init()
@@ -31,11 +31,11 @@ reloj = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 font2 = pygame.font.Font(None, 42)
 gol_text = pygame.font.Font(None, 60)
-sonido1 = pygame.mixer.Sound("Sounds/2.wav")
+sonido1 = pygame.mixer.Sound("Sources/Sounds/2.wav")
 sonido1.set_volume(0.3)
-sonido2 = pygame.mixer.Sound("Sounds/estadio.wav")
+sonido2 = pygame.mixer.Sound("Sources/Sounds/estadio.wav")
 sonido2.set_volume(0.3)
-sonido3 = pygame.mixer.Sound("Sounds/gol.wav")
+sonido3 = pygame.mixer.Sound("Sources/Sounds/gol.wav")
 #-------------------------------------------------------------------------
 
 #----inicializando OBJETOS----
@@ -123,12 +123,6 @@ while True:
     opciones.dibujar_botones("START", 500, 400, 300, 60, WHITE, BLUE)
     opciones.dibujar_botones("Instrucciones", 500, 490, 300, 60, WHITE, BLUE)
 
-
-
-
-
-
-
     if inicio:
         screen.fill(WHITE)
         #sonido1.stop()
@@ -136,7 +130,7 @@ while True:
 
         #GRAFICOS
         #-----fondo-------
-        fondo = pygame.image.load("img/cancha.jpg").convert_alpha()
+        fondo = pygame.image.load("Sources/img/cancha.jpg").convert_alpha()
         fondo = pygame.transform.scale(fondo, (1280, 720))
         screen.blit(fondo, (0, 0))
         LineaMitad = pygame.draw.rect(screen, WHITE, (SCREEN_WIDTH//2, SCREEN_HEIGHT//2+45, 4, 600))
@@ -144,7 +138,7 @@ while True:
 
         #----BALON---------
         ball.update()
-        img_ball = pygame.image.load("img/bola.png")
+        img_ball = pygame.image.load("Sources/img/bola.png")
         img_ball = pygame.transform.scale(img_ball, (40, 40))
         bola = img_ball.get_rect()
         bola.topleft = (ball.x,ball.y)
@@ -153,8 +147,8 @@ while True:
         #------------------------------------------------------------
 
         #----ARCOS----
-        imgarc_izq = pygame.image.load('img/arco1.png')
-        imgarc_der = pygame.image.load('img/arco2.png')
+        imgarc_izq = pygame.image.load('Sources/img/arco1.png')
+        imgarc_der = pygame.image.load('Sources/img/arco2.png')
         imgarc_izq = pygame.transform.scale(imgarc_izq, (160, 265))
         imgarc_der = pygame.transform.scale(imgarc_der, (160, 265))
         arco_izq = imgarc_izq.get_rect()
@@ -165,7 +159,7 @@ while True:
 
 
         #-------------marcador------------
-        marcador_img = pygame.image.load('img/marcador.png')
+        marcador_img = pygame.image.load('Sources/img/marcador.png')
         marcador_img = pygame.transform.scale(marcador_img, (600, 120))
         screen.blit(marcador_img, (SCREEN_WIDTH//2-310,0))
 

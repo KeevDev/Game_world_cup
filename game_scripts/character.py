@@ -9,10 +9,10 @@ class Player:
         self.jugador = jugador
         if self.jugador == 1 :
             self.sprite_files = ["jugador1.png","p1.png", "p2.png", "p3.png", "p4.png","p5.png","p6.png","p7.png","p8.png","p9.png"]
-            self.figura = [pygame.image.load(os.path.join("img/jugador1_sprites", file)).convert_alpha() for file in self.sprite_files]
+            self.figura = [pygame.image.load(os.path.join("Sources/img/jugador1_sprites", file)).convert_alpha() for file in self.sprite_files]
         else:
             self.sprite_files = ["jugador2.png","p1.png", "p2.png", "p3.png", "p4.png","p5.png","p6.png","p7.png","p8.png","p9.png"]
-            self.figura = [pygame.image.load(os.path.join("img/jugador2_sprites", file)).convert_alpha() for file in self.sprite_files]
+            self.figura = [pygame.image.load(os.path.join("Sources/img/jugador2_sprites", file)).convert_alpha() for file in self.sprite_files]
 
         self.speed_x = 0
         self.speed_Y = 0
